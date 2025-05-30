@@ -17,8 +17,15 @@ class App extends React.Component {
 }
 
     gettingWeather = async (e) => {
-        e.preventDefault();
-        let city = e.target.elements.city.value;
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        let city = "";
+        if (e.target.elements && e.target.elements.city) {
+            city = e.target.elements.city.value;
+        } else if (e.target.value) {
+            city = e.target.value;
+        }
       const api_url = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`);
       const data = await api_url.json();
       console.log(data);
